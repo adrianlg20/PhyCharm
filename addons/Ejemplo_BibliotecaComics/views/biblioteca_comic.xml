@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="biblioteca_comic_view_form" model="ir.ui.view">
+        <field name="name">Formulario Comic Biblioteca</field>
+        <field name="model">biblioteca.comic</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button type="object" name="archivar" string="Archivar Cómic"/>
+                </header>
+                <group>
+                    <group>
+                        <field name="nombre"/>
+                        <field name="autor_ids" widget="many2many_tags"/>
+                        <field name="estado"/>
+                        <field name="paginas"/>
+                        <field name="categoria_id"/>
+                        <field name="activo" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="editorial_id"/>
+                        <field name="precio"/>
+                        <field name="fecha_publicacion"/>
+                        <field name="dias_lanzamiento"/>
+                        <field name="portada" widget="image" class="oe_avatar"/>
+                        <field name="valoracion_lector"/>
+                        <field name="ref_doc_id"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="descripcion"/>
+                </group>
+
+                <notebook>
+                    <page string="Ejemplares y Préstamos">
+                        <field name="exemplar_ids">
+                            <tree editable="bottom">
+                                <field name="socio_id"/>
+                                <field name="fecha_prestamo"/>
+                                <field name="fecha_devolucion"/>
+                                <field name="estado_prestamo" readonly="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblioteca_comic_view_tree" model="ir.ui.view">
+        <field name="name">Lista de Comics de la biblioteca</field>
+        <field name="model">biblioteca.comic</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="nombre"/>
+                <field name="fecha_publicacion"/>
+                <field name="estado"/>
+                <field name="categoria_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biblioteca_comic_view_search" model="ir.ui.view">
+        <field name="name">Búsqueda Comics Biblioteca</field>
+        <field name="model">biblioteca.comic</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="autor_ids"/>
+                <filter string="Sin autor" name="sin_autor" domain="[('autor_ids','=',False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="biblioteca_comic_view_kanban" model="ir.ui.view">
+        <field name="name">Kanban Comics Biblioteca</field>
+        <field name="model">biblioteca.comic</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="categoria_id">
+                <field name="nombre"/>
+                <field name="id"/>
+                <field name="portada"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click">
+                            <field name="nombre"/>
+                        </div>
+                        <div class="o_kanban_image_inner_pic">
+                            <img alt="Portada" t-att-src="kanban_image('biblioteca.comic', 'portada', record.id.raw_value)" style="width:30mm; height:30mm;" />
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="biblioteca_socio_view_tree" model="ir.ui.view">
+        <field name="name">Lista Socios</field>
+        <field name="model">biblioteca.socio</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="identificador"/>
+                <field name="nombre"/>
+                <field name="apellido"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biblioteca_socio_view_form" model="ir.ui.view">
+        <field name="name">Formulario Socio</field>
+        <field name="model">biblioteca.socio</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="nombre"/>
+                        <field name="apellido"/>
+                        <field name="identificador"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblioteca_exemplar_view_tree" model="ir.ui.view">
+        <field name="name">Lista Ejemplares</field>
+        <field name="model">biblioteca.comic.exemplar</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="estado_prestamo=='prestado'">
+                <field name="comic_id"/>
+                <field name="socio_id"/>
+                <field name="fecha_prestamo"/>
+                <field name="fecha_devolucion"/>
+                <field name="estado_prestamo"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="biblioteca_exemplar_view_form" model="ir.ui.view">
+        <field name="name">Formulario Ejemplar</field>
+        <field name="model">biblioteca.comic.exemplar</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="comic_id"/>
+                        <field name="estado_prestamo" widget="badge"/>
+                    </group>
+                    <group string="Datos del Préstamo">
+                        <field name="socio_id"/>
+                        <field name="fecha_prestamo" required="socio_id"/>
+                        <field name="fecha_devolucion" required="socio_id"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="biblioteca_comic_action" model="ir.actions.act_window">
+        <field name="name">Biblioteca de Cómics</field>
+        <field name="res_model">biblioteca.comic</field>
+        <field name="view_mode">list,kanban,form</field>
+    </record>
+
+    <record id="biblioteca_socio_action" model="ir.actions.act_window">
+        <field name="name">Socios</field>
+        <field name="res_model">biblioteca.socio</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="biblioteca_exemplar_action" model="ir.actions.act_window">
+        <field name="name">Gestión de Préstamos (Ejemplares)</field>
+        <field name="res_model">biblioteca.comic.exemplar</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem name="Mi biblioteca" id="biblioteca_base_menu" />
+
+    <menuitem name="Cómics"
+              id="biblioteca_comic_menu"
+              parent="biblioteca_base_menu"
+              action="biblioteca_comic_action"
+              sequence="10"/>
+
+    <menuitem name="Préstamos / Ejemplares"
+              id="biblioteca_exemplar_menu"
+              parent="biblioteca_base_menu"
+              action="biblioteca_exemplar_action"
+              sequence="20"/>
+
+    <menuitem name="Socios"
+              id="biblioteca_socio_menu"
+              parent="biblioteca_base_menu"
+              action="biblioteca_socio_action"
+              sequence="30"/>
+
+</odoo>

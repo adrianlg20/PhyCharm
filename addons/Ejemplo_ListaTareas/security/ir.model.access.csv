@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+acl_lista_tareas,lista_tareas.lista_default,model_lista_tareas_lista,base.group_user,1,1,1,1
+acces_lista_tareas_categoria,lista_tareas.categoria,model_lista_tareas_categoria,base.group_user,1,1,1,1

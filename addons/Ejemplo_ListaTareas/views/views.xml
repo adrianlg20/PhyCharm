@@ -1,0 +1,104 @@
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="action_lista_tareas">
+      <field name="name">Listado de tareas</field>
+      <field name="res_model">lista_tareas.lista</field>
+      <field name="view_mode">list,form,kanban,calendar</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_lista_categorias">
+      <field name="name">Categorías de tareas</field>
+      <field name="res_model">lista_tareas.categoria</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_lista_tareas_list" model="ir.ui.view">
+      <field name="name">lista.tareas.list</field>
+      <field name="model">lista_tareas.lista</field>
+      <field name="arch" type="xml">
+        <tree string="Tareas" decoration-danger="vencida == True">
+          <field name="tarea"/>
+          <field name="categoria_id"/> <field name="usuario_asignado"/> <field name="prioridad"/>
+          <field name="fecha_limite"/> <field name="vencida" invisible="1"/>
+          <field name="realizada"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="view_lista_tareas_form" model="ir.ui.view">
+      <field name="name">lista.tareas.form</field>
+      <field name="model">lista_tareas.lista</field>
+      <field name="arch" type="xml">
+        <form string="Tarea">
+          <sheet>
+            <group>
+              <group string="Detalles de la Tarea">
+                <field name="tarea"/>
+                <field name="categoria_id"/>
+                <field name="usuario_asignado"/>
+              </group>
+              <group string="Plazos y Estado">
+                <field name="fecha_asignada"/>
+                <field name="fecha_limite"/>
+                <field name="realizada"/>
+                <field name="vencida" readonly="1"/>
+              </group>
+            </group>
+            <group string="Prioridad y Urgencia">
+              <field name="prioridad"/>
+              <field name="urgente" readonly="1"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_lista_tareas_kanban" model="ir.ui.view">
+      <field name="name">lista.tareas.kanban</field>
+      <field name="model">lista_tareas.lista</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-name="kanban-box">
+              <div class="oe_kanban_global_click">
+                <div class="oe_kanban_details">
+                  <strong><field name="tarea"/></strong>
+                  <div><field name="categoria_id"/></div>
+                  <div>Asignado a: <field name="usuario_asignado"/></div>
+                  <div>Límite: <field name="fecha_limite"/></div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record id="view_lista_tareas_calendar" model="ir.ui.view">
+      <field name="name">lista.tareas.calendar</field>
+      <field name="model">lista_tareas.lista</field>
+      <field name="arch" type="xml">
+        <calendar string="Calendario de Tareas" date_start="fecha_limite" color="categoria_id">
+          <field name="tarea"/>
+          <field name="usuario_asignado"/>
+        </calendar>
+      </field>
+    </record>
+
+    <menuitem id="lista_tareas_menu_root" name="Listado de tareas" sequence="10"/>
+
+    <menuitem id="lista_tareas_menu_1" name="Gestión de tareas"
+              parent="lista_tareas_menu_root" sequence="20"/>
+
+    <menuitem id="lista_tareas_menu_1_list" name="Ver tareas"
+              parent="lista_tareas_menu_1" action="action_lista_tareas" sequence="30"/>
+
+    <menuitem id="lista_tareas_menu_config" name="Configuración"
+              parent="lista_tareas_menu_root" sequence="100"/>
+
+    <menuitem id="lista_tareas_menu_categorias" name="Categorías"
+              parent="lista_tareas_menu_config" action="action_lista_categorias" sequence="110"/>
+
+  </data>
+</odoo>
