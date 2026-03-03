@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee,access_employee,model_repartiments_employee,base.group_user,1,1,1,1
+access_vehicle,access_vehicle,model_repartiments_vehicle,base.group_user,1,1,1,1
+access_client,access_client,model_repartiments_client,base.group_user,1,1,1,1
+access_delivery,access_delivery,model_repartiments_delivery,base.group_user,1,1,1,1
+access_delivery_wizard,access_delivery_wizard,model_repartiments_delivery_wizard,base.group_user,1,1,1,1

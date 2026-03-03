@@ -1,0 +1,32 @@
+<odoo>
+
+    <record id="view_delivery_wizard" model="ir.ui.view">
+        <field name="name">delivery.wizard.form</field>
+        <field name="model">sg.delivery.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Crear Repartiment">
+                <group>
+                    <field name="employee_id"/>
+                    <field name="vehicle_id"/>
+                    <field name="km"/>
+                </group>
+                <footer>
+                    <button name="action_create_delivery"
+                            type="object"
+                            string="Crear"
+                            class="btn-primary"/>
+                    <button string="Cancelar"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_delivery_wizard" model="ir.actions.act_window">
+        <field name="name">Nou Repartiment</field>
+        <field name="res_model">sg.delivery.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
