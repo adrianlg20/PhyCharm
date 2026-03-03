@@ -1,8 +1,0 @@
-<odoo>
-    <record id="seq_delivery" model="ir.sequence">
-        <field name="name">Delivery Sequence</field>
-        <field name="code">repartiments.delivery</field>
-        <field name="prefix">DEL/</field>
-        <field name="padding">4</field>
-    </record>
-</odoo>
