@@ -1,0 +1,69 @@
+<odoo>
+    <record id="view_delivery_tree" model="ir.ui.view">
+        <field name="name">delivery.tree</field>
+        <field name="model">sg.delivery</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="state=='no_eixit'"
+                  decoration-warning="state=='cami'"
+                  decoration-success="state=='entregada'">
+                <field name="code"/>
+                <field name="employee_id"/>
+                <field name="vehicle_id"/>
+                <field name="km"/>
+                <field name="urgency"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_delivery_form" model="ir.ui.view">
+        <field name="name">delivery.form</field>
+        <field name="model">sg.delivery</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_start" type="object" string="Iniciar"
+                            states="no_eixit" class="btn-primary"/>
+                    <button name="action_finish" type="object" string="Finalitzar"
+                            states="cami" class="btn-success"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="no_eixit,cami,entregada"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="code"/>
+                        <field name="employee_id"/>
+                        <field name="vehicle_id"/>
+                        <field name="client_sender_id"/>
+                        <field name="client_receiver_id"/>
+                        <field name="km"/>
+                        <field name="weight"/>
+                        <field name="volume"/>
+                        <field name="total_weight_volume" readonly="1"/>
+                        <field name="urgency"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_delivery_search" model="ir.ui.view">
+        <field name="name">delivery.search</field>
+        <field name="model">sg.delivery</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="urgency"/>
+                <filter string="Pendents" domain="[('state','=','no_eixit')]"/>
+                <filter string="De Camí" domain="[('state','=','cami')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_delivery" model="ir.actions.act_window">
+        <field name="name">Repartiments</field>
+        <field name="res_model">sg.delivery</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

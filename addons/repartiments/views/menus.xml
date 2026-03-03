@@ -1,0 +1,23 @@
+<odoo>
+    <menuitem id="menu_sg_root" name="Empresa Repartiments"/>
+
+    <menuitem id="menu_employee"
+              name="Empleats"
+              parent="menu_sg_root"
+              action="action_employee"/>
+
+    <menuitem id="menu_vehicle"
+              name="Vehicles"
+              parent="menu_sg_root"
+              action="action_vehicle"/>
+
+    <menuitem id="menu_client"
+              name="Clients"
+              parent="menu_sg_root"
+              action="action_client"/>
+
+    <menuitem id="menu_delivery"
+              name="Repartiments"
+              parent="menu_sg_root"
+              action="action_delivery"/>
+</odoo>
