@@ -1,0 +1,10 @@
+<odoo>
+    <report
+        id="employee_delivery_report"
+        model="sg.employee"
+        string="Repartiments Pendents"
+        report_type="qweb-pdf"
+        name="sg_repartiments.delivery_report_template"
+        file="sg_repartiments.delivery_report_template"
+    />
+</odoo>
